@@ -57,7 +57,6 @@ Ingat, kalau ada bug atau kendala, jangan sungkan buat diskusi bareng di grup! ð
 
 const customJob = new CronJob("0 30 18 * * *", scheduleBotWa)
 
-
 let activeSchedules: CronJob[] = [];
 
 async function loadAndStartSchedules() {
@@ -65,9 +64,6 @@ async function loadAndStartSchedules() {
     console.log(`[Scheduler] Starting with ${scheduleData.length} tasks`);
 
     const newSchedules: CronJob[] = [];
-
-    customJob.start()
-    newSchedules.push()
 
     for (const schedule of scheduleData) {
 
@@ -117,6 +113,7 @@ const dailyRefreshJob = new CronJob("0 0 0 * * *", async () => {
 
 export default async function initializeSchedules() {
     await loadAndStartSchedules();
+    customJob.start()
     dailyRefreshJob.start();
 }
 
