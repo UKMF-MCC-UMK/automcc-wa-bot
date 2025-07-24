@@ -3,14 +3,55 @@ import { schedules as scheduleTable } from "../database/schema";
 import { CronJob } from "cron";
 import { MessageMedia } from "whatsapp-web.js";
 import client from "../bot";
+import axios from "axios";
+
+async function scheduleBotWa() {
+    const contacts = '120363399035819974@g.us'
+
+    function getRandomMessage(doer: number, sinner: number, total: number) {
+
+        const message = [
+            `
+\`name FROM members WHERE tugas_css = 'pending';\`
+
+Hasilnya: Ada {sinner} nama yang muncul di terminal saya! 👻
+
+Ayo, para pejuang Mura Computer Club, segera selesaikan tugas "CSS: Flexbox, Grid & Responsivitas".
+
+{doer} member lain udah berhasil nge-deploy tugas mereka. Jangan sampai tugasmu malah jadi deprecated ya, hehe. Ditunggu segera! 💻
+            `,
+       
+        ]
+
+        return message[Math.floor(Math.random() * message.length)].replace("{doer}", String(doer)).replace("{sinner}", String(sinner)).replace("{total}", String(total))
+    }
+
+
+    if (!client.isLoggedIn) return
+
+    try {
+        const res = await axios.get("https:backend.study-mcc.my.id/api/reminder-to-submit/4/2")
+
+        await client.sendMessage(contacts, getRandomMessage(res.data.data.doer_count, res.data.data.sinner_count, res.data.data.total_users))
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+const customJob = new CronJob("0 30 18 * * *", scheduleBotWa)
+
 
 let activeSchedules: CronJob[] = [];
 
 async function loadAndStartSchedules() {
     const scheduleData = await db.select().from(scheduleTable);
     console.log(`[Scheduler] Starting with ${scheduleData.length} tasks`);
-
     const newSchedules: CronJob[] = [];
+
+    customJob.start()
+    newSchedules.push()
 
     for (const schedule of scheduleData) {
 
@@ -29,7 +70,7 @@ async function loadAndStartSchedules() {
                             const media = schedule.attachment ? MessageMedia.fromFilePath(schedule.attachment) : undefined;
 
                             await client.sendMessage(target, media ? media : schedule.message, media && { caption: schedule.message })
-                            
+
                         } catch (error) {
                             console.error(`[Scheduler] Failed to send message to ${target}:`, error);
 
