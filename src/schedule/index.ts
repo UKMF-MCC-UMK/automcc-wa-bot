@@ -21,11 +21,11 @@ Ayo, para pejuang Mura Computer Club, segera selesaikan tugas "CSS: Flexbox, Gri
 {doer} member lain udah berhasil nge-deploy tugas mereka. Jangan sampai tugasmu malah jadi deprecated ya, hehe. Ditunggu segera! 💻
             `,
             `
- Hey, para coders MCC! 📢
+Hey, para coders MCC! 📢
 
 Query terbaru menunjukkan ada {sinner} anggota yang datanya belum masuk untuk tugas "CSS: Flexbox, Grid & Responsivitas".
 
-Sementara itu, {doer} anggota lainnya sudah berhasil commit & push. Jangan sampai kamu kena Error 404: Tugas Not Found ya. Yuk, segera kumpulin! 😄
+Sementara itu, {doer} anggota lainnya sudah berhasil \`commit & push\`. Jangan sampai kamu kena Error 404: \`Tugas Not Found\` ya. Yuk, segera kumpulin! 😄
             `,
             `
 Hello, coders MCC! 👋
@@ -47,7 +47,7 @@ Ingat, kalau ada bug atau kendala, jangan sungkan buat diskusi bareng di grup! �
     try {
         const res = await axios.get("https:backend.study-mcc.my.id/api/reminder-to-submit/4/2")
 
-        await client.sendMessage(contacts, getRandomMessage(res.data.data.doer_count, res.data.data.sinner_count, res.data.data.total_users))
+        await client.sendMessage(contacts, getRandomMessage(res.data.data.doer_count, res.data.data.sinner_count, res.data.data.total_users).trim())
 
     } catch (error) {
         console.error(error);
