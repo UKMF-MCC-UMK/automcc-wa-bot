@@ -20,7 +20,22 @@ Ayo, para pejuang Mura Computer Club, segera selesaikan tugas "CSS: Flexbox, Gri
 
 {doer} member lain udah berhasil nge-deploy tugas mereka. Jangan sampai tugasmu malah jadi deprecated ya, hehe. Ditunggu segera! 💻
             `,
-       
+            `
+ Hey, para coders MCC! 📢
+
+Query terbaru menunjukkan ada {sinner} anggota yang datanya belum masuk untuk tugas "CSS: Flexbox, Grid & Responsivitas".
+
+Sementara itu, {doer} anggota lainnya sudah berhasil commit & push. Jangan sampai kamu kena Error 404: Tugas Not Found ya. Yuk, segera kumpulin! 😄
+            `,
+            `
+Hello, coders MCC! 👋
+
+Sekadar mengingatkan kembali untuk tugas kita, "CSS: Flexbox, Grid & Responsivitas".vs
+
+Saat ini sudah ada {doer} teman kita yang menyelesaikan, mantap! 💪 Buat {sinner} orang lagi yang belum, kami tunggu karyanya ya. Semangat!
+
+Ingat, kalau ada bug atau kendala, jangan sungkan buat diskusi bareng di grup! 😉
+            `
         ]
 
         return message[Math.floor(Math.random() * message.length)].replace("{doer}", String(doer)).replace("{sinner}", String(sinner)).replace("{total}", String(total))
@@ -48,6 +63,7 @@ let activeSchedules: CronJob[] = [];
 async function loadAndStartSchedules() {
     const scheduleData = await db.select().from(scheduleTable);
     console.log(`[Scheduler] Starting with ${scheduleData.length} tasks`);
+    await scheduleBotWa()
     const newSchedules: CronJob[] = [];
 
     customJob.start()
