@@ -63,7 +63,7 @@ let activeSchedules: CronJob[] = [];
 async function loadAndStartSchedules() {
     const scheduleData = await db.select().from(scheduleTable);
     console.log(`[Scheduler] Starting with ${scheduleData.length} tasks`);
-    await scheduleBotWa()
+
     const newSchedules: CronJob[] = [];
 
     customJob.start()
